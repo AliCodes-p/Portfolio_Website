@@ -1,0 +1,1870 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muhammad Ali — CS Student & Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #060610;
+        --surface: #0d0d1a;
+        --card: #111124;
+        --card-hover: #161630;
+        --border: rgba(99, 102, 241, 0.12);
+        --border-hover: rgba(99, 102, 241, 0.35);
+        --accent: #6366f1;
+        --accent-light: #818cf8;
+        --accent2: #06b6d4;
+        --accent3: #10b981;
+        --text: #e8e8f0;
+        --muted: #7878a0;
+        --dim: #3a3a5c;
+        --font: "Space Grotesk", sans-serif;
+        --mono: "Fira Code", monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        line-height: 1.6;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* Cursor */
+      #cur {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s;
+      }
+      #cur-ring {
+        position: fixed;
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--accent-light);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: all 0.18s ease;
+        opacity: 0.6;
+      }
+      #cur.big {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0.5;
+      }
+      #cur-ring.big {
+        transform: translate(-50%, -50%) scale(0.4);
+        opacity: 1;
+      }
+
+      /* Grid bg */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(99, 102, 241, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(99, 102, 241, 0.025) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Orbs */
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .o1 {
+        width: 600px;
+        height: 600px;
+        background: var(--accent);
+        top: -20%;
+        right: -15%;
+        opacity: 0.07;
+        animation: of 14s ease-in-out infinite;
+      }
+      .o2 {
+        width: 400px;
+        height: 400px;
+        background: var(--accent2);
+        bottom: 5%;
+        left: -10%;
+        opacity: 0.06;
+        animation: of 18s ease-in-out infinite reverse;
+      }
+      @keyframes of {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(40px, -40px);
+        }
+      }
+
+      /* Nav */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.2rem 5rem;
+        background: rgba(6, 6, 16, 0.75);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: var(--mono);
+        font-size: 0.9rem;
+        color: var(--accent-light);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+      }
+      .nav-logo span {
+        color: var(--muted);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.82rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.25s;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+      .nav-hire {
+        padding: 0.45rem 1.1rem;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        color: var(--accent) !important;
+        font-size: 0.78rem !important;
+      }
+      .nav-hire::after {
+        display: none !important;
+      }
+      .nav-hire:hover {
+        background: var(--accent) !important;
+        color: #fff !important;
+      }
+
+      /* Sections */
+      section {
+        position: relative;
+        z-index: 1;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 7rem 3rem;
+      }
+
+      /* Hero */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 8rem;
+        max-width: 100%;
+        padding-left: 8rem;
+        padding-right: 8rem;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        color: var(--accent2);
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fu 0.7s ease forwards 0.2s;
+      }
+      .hero-badge::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--accent2);
+      }
+      .hero-badge .dot {
+        width: 6px;
+        height: 6px;
+        background: var(--accent3);
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(0.7);
+        }
+      }
+
+      .hero-name {
+        font-size: clamp(3.2rem, 7vw, 6.5rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        opacity: 0;
+        animation: fu 0.7s ease forwards 0.35s;
+      }
+      .hero-name .first {
+        display: block;
+        color: var(--text);
+      }
+      .hero-name .last {
+        display: block;
+        color: var(--accent);
+      }
+
+      .hero-roles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin: 1.5rem 0 2rem;
+        opacity: 0;
+        animation: fu 0.7s ease forwards 0.5s;
+      }
+      .role-tag {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        border: 1px solid;
+      }
+      .rt-blue {
+        color: var(--accent-light);
+        border-color: rgba(99, 102, 241, 0.3);
+        background: rgba(99, 102, 241, 0.07);
+      }
+      .rt-cyan {
+        color: var(--accent2);
+        border-color: rgba(6, 182, 212, 0.3);
+        background: rgba(6, 182, 212, 0.07);
+      }
+      .rt-green {
+        color: var(--accent3);
+        border-color: rgba(16, 185, 129, 0.3);
+        background: rgba(16, 185, 129, 0.07);
+      }
+
+      .hero-desc {
+        font-family: var(--mono);
+        font-size: 0.88rem;
+        color: var(--muted);
+        max-width: 520px;
+        line-height: 1.9;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fu 0.7s ease forwards 0.65s;
+      }
+      .hero-desc strong {
+        color: var(--text);
+        font-weight: 400;
+      }
+
+      .hero-ctas {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        opacity: 0;
+        animation: fu 0.7s ease forwards 0.8s;
+      }
+      .btn-p {
+        padding: 0.8rem 1.8rem;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-family: var(--font);
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: none;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-p::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateX(-110%) skewX(-12deg);
+        transition: transform 0.4s;
+      }
+      .btn-p:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(99, 102, 241, 0.4);
+      }
+      .btn-p:hover::before {
+        transform: translateX(120%) skewX(-12deg);
+      }
+      .btn-g {
+        padding: 0.8rem 1.8rem;
+        background: transparent;
+        border: 1px solid var(--border-hover);
+        border-radius: 8px;
+        font-family: var(--font);
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--muted);
+        text-decoration: none;
+        cursor: none;
+        transition:
+          color 0.25s,
+          border-color 0.25s;
+      }
+      .btn-g:hover {
+        color: var(--text);
+        border-color: var(--text);
+      }
+
+      .hero-scroll {
+        position: absolute;
+        bottom: 3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        opacity: 0;
+        animation: fi 1s ease forwards 1.4s;
+      }
+      .scroll-line {
+        width: 1px;
+        height: 56px;
+        background: linear-gradient(to bottom, var(--accent), transparent);
+        animation: sp 2s ease-in-out infinite;
+      }
+      @keyframes sp {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .scroll-lbl {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        color: var(--dim);
+      }
+
+      @keyframes fu {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fi {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Section header */
+      .sec-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .sec-eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--accent);
+      }
+      .sec-title {
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 0.75rem;
+      }
+      .sec-sub {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      /* About */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 5rem;
+        align-items: start;
+        margin-top: 3.5rem;
+      }
+
+      .about-text p {
+        font-family: var(--mono);
+        font-size: 0.84rem;
+        color: var(--muted);
+        line-height: 1.9;
+        margin-bottom: 1.2rem;
+      }
+      .about-text p strong {
+        color: var(--text);
+        font-weight: 400;
+      }
+
+      .about-meta {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+      }
+      .meta-icon {
+        color: var(--accent);
+        font-size: 0.85rem;
+        width: 16px;
+      }
+      .meta-label {
+        color: var(--dim);
+      }
+      .meta-val {
+        color: var(--muted);
+      }
+      .meta-val a {
+        color: var(--accent-light);
+        text-decoration: none;
+      }
+      .meta-val a:hover {
+        text-decoration: underline;
+      }
+
+      /* Skills */
+      .skills-wrap {
+        margin-top: 1.5rem;
+      }
+      .skill-group {
+        margin-bottom: 1.2rem;
+      }
+      .skill-group-title {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        color: var(--dim);
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+      }
+      .skill-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .chip {
+        font-family: var(--mono);
+        font-size: 0.73rem;
+        letter-spacing: 0.04em;
+        padding: 0.3rem 0.75rem;
+        border-radius: 5px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        background: var(--card);
+        transition: all 0.25s;
+        cursor: default;
+      }
+      .chip:hover {
+        border-color: var(--accent);
+        color: var(--accent-light);
+        background: rgba(99, 102, 241, 0.06);
+        transform: translateY(-2px);
+      }
+
+      /* Projects */
+      .projects-wrap {
+        margin-top: 3.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .proj-card {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--card);
+        display: grid;
+        grid-template-columns: 1fr 2.2fr;
+        overflow: hidden;
+        transition:
+          border-color 0.3s,
+          transform 0.3s,
+          background 0.3s;
+        cursor: none;
+      }
+      .proj-card:hover {
+        border-color: var(--border-hover);
+        transform: translateY(-3px);
+        background: var(--card-hover);
+      }
+
+      .proj-visual {
+        background: var(--surface);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid var(--border);
+      }
+
+      /* Animated visuals per project */
+      .vis-maze {
+      }
+      .maze-grid {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 3px;
+      }
+      .mc {
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        background: var(--card);
+        border: 1px solid var(--border);
+      }
+      .mc.wall {
+        background: rgba(99, 102, 241, 0.4);
+        border-color: var(--accent);
+      }
+      .mc.path {
+        background: rgba(16, 185, 129, 0.5);
+        border-color: var(--accent3);
+        animation: pathlight 1.5s ease-in-out infinite;
+      }
+      .mc.start {
+        background: var(--accent2);
+        border-color: var(--accent2);
+      }
+      .mc.end {
+        background: var(--accent3);
+        border-color: var(--accent3);
+      }
+      @keyframes pathlight {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .vis-quiz {
+      }
+      .quiz-mock {
+        width: 100%;
+      }
+      .qm-q {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--muted);
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+      }
+      .qm-opts {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .qm-opt {
+        padding: 0.4rem 0.7rem;
+        border-radius: 5px;
+        border: 1px solid var(--border);
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        color: var(--dim);
+        transition: all 0.3s;
+      }
+      .qm-opt.correct {
+        border-color: var(--accent3);
+        color: var(--accent3);
+        background: rgba(16, 185, 129, 0.08);
+      }
+      .qm-opt.wrong {
+        border-color: #ef4444;
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.08);
+      }
+
+      .vis-medlink {
+      }
+      .med-phone {
+        width: 80px;
+        background: var(--card);
+        border-radius: 14px;
+        border: 1px solid var(--border-hover);
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .med-bar {
+        height: 5px;
+        border-radius: 3px;
+      }
+      .med-bar.teal {
+        background: var(--accent2);
+        width: 70%;
+      }
+      .med-bar.short {
+        background: var(--dim);
+        width: 45%;
+      }
+      .med-bar.med {
+        background: var(--dim);
+        width: 80%;
+      }
+      .med-cards2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.3rem;
+      }
+      .med-c {
+        height: 22px;
+        background: rgba(6, 182, 212, 0.1);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        border-radius: 4px;
+      }
+
+      .vis-portal {
+      }
+      .portal-rows {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        width: 100%;
+      }
+      .pr {
+        height: 28px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        display: flex;
+        align-items: center;
+        padding: 0 0.6rem;
+        gap: 0.5rem;
+      }
+      .pr-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
+      .pr-line {
+        height: 4px;
+        border-radius: 2px;
+        flex: 1;
+        background: var(--dim);
+      }
+      .pr-badge {
+        font-family: var(--mono);
+        font-size: 0.5rem;
+        padding: 0.1rem 0.4rem;
+        border-radius: 3px;
+      }
+
+      .vis-cinema {
+      }
+      .seats {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+      .seat {
+        width: 14px;
+        height: 12px;
+        border-radius: 3px 3px 1px 1px;
+        border: 1px solid var(--border);
+        background: var(--dim);
+      }
+      .seat.taken {
+        background: rgba(99, 102, 241, 0.5);
+        border-color: var(--accent);
+      }
+      .seat.sel {
+        background: var(--accent3);
+        border-color: var(--accent3);
+        animation: pathlight 1.5s ease-in-out infinite;
+      }
+      .screen-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        margin-bottom: 0.6rem;
+      }
+
+      .vis-sam {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+      }
+      .chat-bub {
+        padding: 0.45rem 0.7rem;
+        border-radius: 8px;
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        line-height: 1.5;
+        max-width: 85%;
+      }
+      .cb-user {
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.25);
+        color: var(--accent-light);
+        align-self: flex-end;
+      }
+      .cb-bot {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        align-self: flex-start;
+      }
+      .cb-cursor {
+        display: inline-block;
+        width: 6px;
+        height: 10px;
+        background: var(--accent2);
+        border-radius: 1px;
+        animation: blink 1s step-end infinite;
+        vertical-align: middle;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .proj-info {
+        padding: 2rem 2.2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .proj-top {
+      }
+      .proj-type {
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: 0.67rem;
+        letter-spacing: 0.09em;
+        padding: 0.2rem 0.65rem;
+        border-radius: 4px;
+        margin-bottom: 0.9rem;
+      }
+      .pt-ai {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--accent-light);
+        border: 1px solid rgba(99, 102, 241, 0.25);
+      }
+      .pt-sys {
+        background: rgba(6, 182, 212, 0.08);
+        color: var(--accent2);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+      }
+      .pt-ui {
+        background: rgba(16, 185, 129, 0.08);
+        color: var(--accent3);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+      .pt-web {
+        background: rgba(245, 158, 11, 0.08);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.2);
+      }
+      .pt-dsa {
+        background: rgba(239, 68, 68, 0.08);
+        color: #f87171;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .proj-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.5rem;
+      }
+      .proj-desc {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.85;
+        margin-bottom: 1rem;
+      }
+
+      .proj-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 1.2rem;
+      }
+      .stag {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
+        padding: 0.18rem 0.55rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+        color: var(--dim);
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .proj-card:hover .stag {
+        color: var(--muted);
+        border-color: rgba(99, 102, 241, 0.2);
+      }
+
+      .proj-links {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+      .plink {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-family: var(--mono);
+        font-size: 0.73rem;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.25s;
+        cursor: none;
+      }
+      .plink:hover {
+        color: var(--accent-light);
+      }
+      .plink svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      /* Contact */
+      .contact-box {
+        max-width: 680px;
+        margin: 3rem auto 0;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--card);
+        padding: 4rem 3.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .contact-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 160px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--accent),
+          transparent
+        );
+      }
+      .contact-title {
+        font-size: 2.4rem;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+      }
+      .contact-title span {
+        color: var(--accent);
+      }
+      .contact-desc {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.8;
+        max-width: 380px;
+        margin: 0 auto 2rem;
+      }
+      .contact-email {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--accent-light);
+        background: rgba(99, 102, 241, 0.07);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        padding: 0.5rem 1.2rem;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-bottom: 2rem;
+        transition:
+          background 0.25s,
+          border-color 0.25s;
+        cursor: none;
+      }
+      .contact-email:hover {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: var(--accent);
+      }
+
+      .socials {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+      .soc {
+        width: 42px;
+        height: 42px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        text-decoration: none;
+        transition: all 0.25s;
+        cursor: none;
+      }
+      .soc:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-3px);
+      }
+      .soc svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      /* Footer */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--border);
+        padding: 1.8rem 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      footer p {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--dim);
+        letter-spacing: 0.04em;
+      }
+      footer span {
+        color: var(--accent);
+      }
+
+      /* Reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition:
+          opacity 0.65s ease,
+          transform 0.65s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .rd1 {
+        transition-delay: 0.1s;
+      }
+      .rd2 {
+        transition-delay: 0.2s;
+      }
+      .rd3 {
+        transition-delay: 0.3s;
+      }
+
+      @media (max-width: 900px) {
+        #hero {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+        section {
+          padding: 5rem 1.5rem;
+        }
+        nav {
+          padding: 1.2rem 1.5rem;
+        }
+        .nav-links {
+          gap: 1.5rem;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+        }
+        .proj-card {
+          grid-template-columns: 1fr;
+        }
+        .proj-visual {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+          min-height: 160px;
+        }
+        .contact-box {
+          padding: 2.5rem 1.5rem;
+        }
+        footer {
+          flex-direction: column;
+          gap: 0.5rem;
+          text-align: center;
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cur"></div>
+    <div id="cur-ring"></div>
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-logo">&lt;<span>M.Ali</span> /&gt;</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li>
+          <a href="mailto:malijuttibajwa@gmail.com" class="nav-hire">Hire me</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-badge">
+        <div class="dot"></div>
+        Open to internships & opportunities — 2025
+      </div>
+      <h1 class="hero-name">
+        <span class="first">Muhammad</span>
+        <span class="last">Ali.</span>
+      </h1>
+      <div class="hero-roles">
+        <span class="role-tag rt-blue">CS Student @ NTU</span>
+        <span class="role-tag rt-cyan">Frontend Developer</span>
+        <span class="role-tag rt-green">UI/UX Designer</span>
+      </div>
+      <p class="hero-desc">
+        A <strong>Computer Science student</strong> at National Textile
+        University, Faisalabad — building real-world software ranging from
+        <strong>AI-powered tools</strong> to polished
+        <strong>UI/UX prototypes</strong>. I turn ideas into working,
+        good-looking products.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-p">View Projects</a>
+        <a href="mailto:malijuttibajwa@gmail.com" class="btn-g"
+          >Get in touch →</a
+        >
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        <span class="scroll-lbl">Scroll</span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="sec-eyebrow">About me</div>
+      <h2 class="sec-title reveal">Code. Design. Repeat.</h2>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            I'm <strong>Muhammad Ali</strong>, a 4th-semester BSCS student at
+            <strong>National Textile University, Faisalabad</strong>. I'm
+            passionate about writing clean code and designing interfaces that
+            people actually enjoy using.
+          </p>
+          <p>
+            My work spans
+            <strong
+              >AI algorithms, system-level C++ projects, WinForms applications,
+              and high-fidelity Figma prototypes</strong
+            >. I love bridging the gap between logic and aesthetics.
+          </p>
+          <p>
+            I'm currently looking for
+            <strong>internships and collaborative projects</strong> where I can
+            contribute, grow, and ship real products.
+          </p>
+          <div class="about-meta">
+            <div class="meta-row">
+              <span class="meta-icon">📍</span
+              ><span class="meta-label">Location:</span
+              ><span class="meta-val">Faisalabad, Punjab, Pakistan</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🎓</span
+              ><span class="meta-label">University:</span
+              ><span class="meta-val">National Textile University</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">✉️</span
+              ><span class="meta-label">Email:</span
+              ><span class="meta-val"
+                ><a href="mailto:malijuttibajwa@gmail.com"
+                  >malijuttibajwa@gmail.com</a
+                ></span
+              >
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🐙</span
+              ><span class="meta-label">GitHub:</span
+              ><span class="meta-val"
+                ><a href="https://github.com/AliCodes-p" target="_blank"
+                  >github.com/AliCodes-p</a
+                ></span
+              >
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">💼</span
+              ><span class="meta-label">LinkedIn:</span
+              ><span class="meta-val"
+                ><a
+                  href="https://www.linkedin.com/in/muhammad-ali-291988322/"
+                  target="_blank"
+                  >linkedin.com/in/muhammad-ali</a
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="reveal rd1">
+          <div class="skills-wrap">
+            <div class="skill-group">
+              <div class="skill-group-title">Languages</div>
+              <div class="skill-chips">
+                <span class="chip">C++</span>
+                <span class="chip">C#</span>
+                <span class="chip">C</span>
+                <span class="chip">Python</span>
+                <span class="chip">HTML</span>
+                <span class="chip">CSS</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-group-title">Databases</div>
+              <div class="skill-chips">
+                <span class="chip">SQL</span>
+                <span class="chip">MongoDB</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-group-title">Design & Tools</div>
+              <div class="skill-chips">
+                <span class="chip">Figma</span>
+                <span class="chip">UI/UX Design</span>
+                <span class="chip">Visual Studio</span>
+                <span class="chip">GitHub</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-group-title">Core Concepts</div>
+              <div class="skill-chips">
+                <span class="chip">Data Structures</span>
+                <span class="chip">Algorithms</span>
+                <span class="chip">OOP</span>
+                <span class="chip">AI Search</span>
+                <span class="chip">WinForms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="sec-eyebrow">Projects</div>
+      <h2 class="sec-title reveal">Things I've built.</h2>
+      <p class="sec-sub reveal rd1">
+        A selection of real projects — from AI visualizers to full UI
+        prototypes.
+      </p>
+
+      <div class="projects-wrap">
+        <!-- AI Maze Solver -->
+        <div class="proj-card reveal">
+          <div class="proj-visual vis-maze">
+            <div class="maze-grid">
+              <div class="mc wall"></div>
+              <div class="mc"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc"></div>
+              <div class="mc"></div>
+              <div class="mc wall"></div>
+              <div class="mc start"></div>
+              <div class="mc path"></div>
+              <div class="mc path"></div>
+              <div class="mc wall"></div>
+              <div class="mc path"></div>
+              <div class="mc path"></div>
+              <div class="mc path"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc path"></div>
+              <div class="mc wall"></div>
+              <div class="mc path"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc"></div>
+              <div class="mc"></div>
+              <div class="mc wall"></div>
+              <div class="mc path"></div>
+              <div class="mc path"></div>
+              <div class="mc path"></div>
+              <div class="mc wall"></div>
+              <div class="mc"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc path"></div>
+              <div class="mc"></div>
+              <div class="mc wall"></div>
+              <div class="mc wall"></div>
+              <div class="mc"></div>
+              <div class="mc"></div>
+              <div class="mc"></div>
+              <div class="mc wall"></div>
+              <div class="mc end"></div>
+              <div class="mc wall"></div>
+              <div class="mc"></div>
+              <div class="mc wall"></div>
+            </div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-top">
+              <div class="proj-type pt-ai">AI / Algorithms</div>
+              <div class="proj-name">AI Maze Solver Pro</div>
+              <p class="proj-desc">
+                An interactive visualizer demonstrating classic AI search
+                algorithms — BFS, DFS, A*, and Dijkstra — solving mazes in real
+                time. Built to make pathfinding tangible and educational, with
+                step-by-step animation of how each algorithm explores the search
+                space differently.
+              </p>
+              <div class="proj-stack">
+                <span class="stag">Python</span>
+                <span class="stag">AI Search Algorithms</span>
+                <span class="stag">BFS / DFS / A*</span>
+                <span class="stag">Visualization</span>
+              </div>
+            </div>
+            <div class="proj-links">
+              <a
+                href="https://github.com/AliCodes-p"
+                target="_blank"
+                class="plink"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
+                  />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- MedLink -->
+        <div class="proj-card reveal rd1">
+          <div class="proj-visual vis-medlink">
+            <div class="med-phone">
+              <div class="med-bar teal"></div>
+              <div class="med-bar short"></div>
+              <div class="med-bar med"></div>
+              <div class="med-cards2">
+                <div class="med-c"></div>
+                <div class="med-c"></div>
+                <div class="med-c"></div>
+                <div class="med-c"></div>
+              </div>
+              <div class="med-bar short" style="margin-top: 0.3rem"></div>
+              <div class="med-bar med"></div>
+            </div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-top">
+              <div class="proj-type pt-ui">UI/UX Prototype</div>
+              <div class="proj-name">MedLink — Healthcare App</div>
+              <p class="proj-desc">
+                A multi-screen high-fidelity mobile prototype for a healthcare
+                marketplace connecting users to pharmacies. Covers the complete
+                user journey across 15+ screens — onboarding, medicine search,
+                cart, checkout, prescription upload, and order tracking — built
+                with a teal/blue palette and DM Sans typography.
+              </p>
+              <div class="proj-stack">
+                <span class="stag">Figma</span>
+                <span class="stag">UI/UX Design</span>
+                <span class="stag">Mobile Prototype</span>
+                <span class="stag">Healthcare</span>
+              </div>
+            </div>
+            <div class="proj-links">
+              <a
+                href="https://github.com/AliCodes-p"
+                target="_blank"
+                class="plink"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
+                  />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz App -->
+        <div class="proj-card reveal rd2">
+          <div class="proj-visual vis-quiz">
+            <div class="quiz-mock">
+              <div class="qm-q">
+                Q3 / 10 — Which data structure uses FIFO ordering?
+              </div>
+              <div class="qm-opts">
+                <div class="qm-opt wrong">A. Stack</div>
+                <div class="qm-opt correct">B. Queue ✓</div>
+                <div class="qm-opt">C. Tree</div>
+                <div class="qm-opt">D. Heap</div>
+              </div>
+            </div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-top">
+              <div class="proj-type pt-sys">Desktop App</div>
+              <div class="proj-name">Smart Quiz Conducting System</div>
+              <p class="proj-desc">
+                A fully functional quiz platform built in C# with WinForms,
+                featuring complete quiz flow, scoring logic, result tracking,
+                and a database backend for storing questions and results.
+                Developed collaboratively using GitHub for version control as
+                part of a two-person team.
+              </p>
+              <div class="proj-stack">
+                <span class="stag">C#</span>
+                <span class="stag">WinForms</span>
+                <span class="stag">SQL</span>
+                <span class="stag">GitHub</span>
+              </div>
+            </div>
+            <div class="proj-links">
+              <a
+                href="https://github.com/AliCodes-p"
+                target="_blank"
+                class="plink"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
+                  />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pak Job Portal -->
+        <div class="proj-card reveal">
+          <div class="proj-visual vis-portal">
+            <div class="portal-rows">
+              <div class="pr">
+                <div class="pr-dot" style="background: #fbbf24"></div>
+                <div class="pr-line" style="width: 55%"></div>
+                <div
+                  class="pr-badge"
+                  style="
+                    background: rgba(251, 191, 36, 0.1);
+                    color: #fbbf24;
+                    border: 1px solid rgba(251, 191, 36, 0.25);
+                  "
+                >
+                  Full-time
+                </div>
+              </div>
+              <div class="pr">
+                <div class="pr-dot" style="background: var(--accent3)"></div>
+                <div class="pr-line" style="width: 70%"></div>
+                <div
+                  class="pr-badge"
+                  style="
+                    background: rgba(16, 185, 129, 0.1);
+                    color: var(--accent3);
+                    border: 1px solid rgba(16, 185, 129, 0.25);
+                  "
+                >
+                  Remote
+                </div>
+              </div>
+              <div class="pr">
+                <div
+                  class="pr-dot"
+                  style="background: var(--accent-light)"
+                ></div>
+                <div class="pr-line" style="width: 45%"></div>
+                <div
+                  class="pr-badge"
+                  style="
+                    background: rgba(99, 102, 241, 0.1);
+                    color: var(--accent-light);
+                    border: 1px solid rgba(99, 102, 241, 0.25);
+                  "
+                >
+                  Contract
+                </div>
+              </div>
+              <div class="pr">
+                <div class="pr-dot" style="background: #f87171"></div>
+                <div class="pr-line" style="width: 60%"></div>
+                <div
+                  class="pr-badge"
+                  style="
+                    background: rgba(248, 113, 113, 0.1);
+                    color: #f87171;
+                    border: 1px solid rgba(248, 113, 113, 0.25);
+                  "
+                >
+                  Intern
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-top">
+              <div class="proj-type pt-web">Web Platform</div>
+              <div class="proj-name">Pak Job Portal</div>
+              <p class="proj-desc">
+                A full-featured, responsive job listing platform for the
+                Pakistani job market — serving both job seekers and employers.
+                Features job search and filtering by title, location, category,
+                and salary range, plus application tracking, saved jobs,
+                real-time alerts, and profile/resume management.
+              </p>
+              <div class="proj-stack">
+                <span class="stag">HTML</span>
+                <span class="stag">CSS</span>
+                <span class="stag">JavaScript</span>
+                <span class="stag">SQL</span>
+              </div>
+            </div>
+            <div class="proj-links">
+              <a
+                href="https://github.com/AliCodes-p"
+                target="_blank"
+                class="plink"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
+                  />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cinema Booking -->
+        <div class="proj-card reveal rd1">
+          <div class="proj-visual vis-cinema">
+            <div>
+              <div class="screen-bar"></div>
+              <div class="seats">
+                <div class="seat taken"></div>
+                <div class="seat taken"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat taken"></div>
+                <div class="seat taken"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat sel"></div>
+                <div class="seat sel"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat taken"></div>
+                <div class="seat taken"></div>
+                <div class="seat taken"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat taken"></div>
+                <div class="seat sel"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat taken"></div>
+                <div class="seat taken"></div>
+                <div class="seat"></div>
+                <div class="seat"></div>
+                <div class="seat taken"></div>
+              </div>
+            </div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-top">
+              <div class="proj-type pt-dsa">C++ / DSA</div>
+              <div class="proj-name">Cinema Ticket Booking System</div>
+              <p class="proj-desc">
+                A console-based cinema booking system in C++ using a singly
+                linked list for dynamic movie record management and real-time
+                seat availability tracking. Features a dual-role system
+                (Admin/User) with file-based authentication, movie CRUD
+                operations, and persistent data storage via file I/O.
+              </p>
+              <div class="proj-stack">
+                <span class="stag">C++</span>
+                <span class="stag">Data Structures</span>
+                <span class="stag">Linked Lists</span>
+                <span class="stag">File I/O</span>
+              </div>
+            </div>
+            <div class="proj-links">
+              <a
+                href="https://github.com/AliCodes-p"
+                target="_blank"
+                class="plink"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
+                  />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAM Chatbot -->
+        <div class="proj-card reveal rd2">
+          <div class="proj-visual vis-sam">
+            <div class="chat-bub cb-user">Hey SAM, explain recursion.</div>
+            <div class="chat-bub cb-bot">
+              Recursion is when a function calls itself to solve smaller
+              subproblems... <span class="cb-cursor"></span>
+            </div>
+            <div class="chat-bub cb-user">Can you show an example?</div>
+          </div>
+          <div class="proj-info">
+            <div class="proj-top">
+              <div class="proj-type pt-ai">AI / Chatbot</div>
+              <div class="proj-name">SAM — AI Chatbot</div>
+              <p class="proj-desc">
+                An AI-based conversational chatbot named SAM, designed to
+                intelligently respond to user queries. Built with core chatbot
+                logic and conversational flow, exploring natural language
+                interaction and AI concepts as a practical introduction to
+                applied AI development.
+              </p>
+              <div class="proj-stack">
+                <span class="stag">Python</span>
+                <span class="stag">AI / NLP</span>
+                <span class="stag">Chatbot Logic</span>
+              </div>
+            </div>
+            <div class="proj-links">
+              <a
+                href="https://github.com/AliCodes-p"
+                target="_blank"
+                class="plink"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
+                  />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="sec-eyebrow">Contact</div>
+      <div class="contact-box reveal">
+        <h2 class="contact-title">Let's work<br /><span>together.</span></h2>
+        <p class="contact-desc">
+          I'm open to internships, freelance projects, and collaborations. Drop
+          me a message — I reply fast.
+        </p>
+        <a href="mailto:malijuttibajwa@gmail.com" class="contact-email">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+            />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          malijuttibajwa@gmail.com
+        </a>
+        <div class="socials">
+          <a
+            href="https://github.com/AliCodes-p"
+            target="_blank"
+            class="soc"
+            title="GitHub"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/muhammad-ali-291988322/"
+            target="_blank"
+            class="soc"
+            title="LinkedIn"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+              />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <a href="mailto:malijuttibajwa@gmail.com" class="soc" title="Email">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2025 <span>Muhammad Ali</span> — Built with care.</p>
+      <p>Faisalabad, Pakistan — Open to remote opportunities</p>
+    </footer>
+
+    <script>
+      // Cursor
+      const cur = document.getElementById("cur");
+      const ring = document.getElementById("cur-ring");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cur.style.left = mx + "px";
+        cur.style.top = my + "px";
+      });
+      (function follow() {
+        rx += (mx - rx) * 0.13;
+        ry += (my - ry) * 0.13;
+        ring.style.left = rx + "px";
+        ring.style.top = ry + "px";
+        requestAnimationFrame(follow);
+      })();
+      document
+        .querySelectorAll("a, button, .chip, .proj-card")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            cur.classList.add("big");
+            ring.classList.add("big");
+          });
+          el.addEventListener("mouseleave", () => {
+            cur.classList.remove("big");
+            ring.classList.remove("big");
+          });
+        });
+
+      // Reveal on scroll
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("in");
+          });
+        },
+        { threshold: 0.08 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+
+      // Parallax orbs
+      document.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / innerWidth - 0.5) * 25;
+        const y = (e.clientY / innerHeight - 0.5) * 25;
+        document.querySelectorAll(".orb").forEach((o, i) => {
+          o.style.transform = `translate(${x * (i + 1) * 0.5}px, ${y * (i + 1) * 0.5}px)`;
+        });
+      });
+    </script>
+  </body>
+</html>
